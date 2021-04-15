@@ -1,0 +1,54 @@
+.adminPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 600px;
+    border: 2px solid red;
+}
+
+/* .adminPage__addNewUser{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+} */
+
+.adminPage > *{
+    min-width: 250px;
+    min-height: 250px;
+    margin: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+
+.fineUser{
+    font-weight: 700;
+    font-size: 4rem;
+}
+
+.fineUser span{
+    width: 100%;
+    text-align: center;
+}
+
+.adminPage > *:hover{
+    transition: all 0.2s; 
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+.textfields{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
