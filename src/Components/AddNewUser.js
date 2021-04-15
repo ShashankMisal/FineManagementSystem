@@ -10,6 +10,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
+import firebase from "firebase/app";
+import db from '../firebase.js'
 
 
 const styles = (theme) => ({
@@ -54,18 +56,37 @@ const DialogActions = withStyles((theme) => ({
 
 export default function AddNewUser() {
   const [open, setOpen] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [url, setUrl] = React.useState("");
+  const [popup, setPopup] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.preventDefault();
     setOpen(false);
+    if(name!=="" && url!=="")
+    {
+    db.collection('users').add({
+      avatar: url,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      displayName: name,
+      fineDue:0,
+      totalFine:0,
+      totalFinePaid:0
+  })
+
+  
+    setPopup(true)
+    setName("");
+    setUrl("");
+    }
   };
 
   const style = {
       margin:"10px"
   }
-
   
 
   return (
@@ -90,6 +111,9 @@ export default function AddNewUser() {
           placeholder="Enter Name.."
           multiline
           variant="outlined"
+          value={name}
+          name="name"
+          onChange={e => setName(e.target.value)}
           />
          <TextField
           style={style}
@@ -98,6 +122,9 @@ export default function AddNewUser() {
           placeholder="Enter Avatar URL.."
           multiline
           variant="outlined"
+          value={url}
+          name="url"
+          onChange={e => setUrl(e.target.value)}
           />
          
           </div>
@@ -108,6 +135,7 @@ export default function AddNewUser() {
           </Button>
         </DialogActions>
       </Dialog>
+    
     </div>
   );
 }

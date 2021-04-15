@@ -5,7 +5,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     height: 600px;
-    border: 2px solid red;
 }
 
 /* .adminPage__addNewUser{

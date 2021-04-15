@@ -92,7 +92,7 @@ export default function CustomPaginationActionsTable(props) {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const rows = props.fines
+  const rows = props.fines.sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate())
 
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);

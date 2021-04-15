@@ -13,7 +13,7 @@ function UserDetails() {
     const [fines,setFines] = React.useState([])
     const [summary,setSummary] = React.useState([])
 
-    const {totalFine,fineDue,totalFinePaid,displayName,avatar} = summary
+    const {totalFine,fineDue,totalFinePaid,displayName,avatar} = summary || ""
     
     React.useEffect(()=>{
         if(userDetails){

@@ -4,24 +4,33 @@ import UserDetails from './Components/UserDetails'
 import AdminPage from './Components/AdminPage'
 import Fine from './Components/Fine'
 import './App.css';
-import {Route} from 'react-router-dom'
+import {Route , Switch} from 'react-router-dom'
 
 function App() {
   return (
     <div className="App">
         {/* <Intro /> */}
 
+    <Switch>
+
       <Route exact path="/">
         <UserList />
       </Route>
 
-      <Route path="/:userDetails">
+
+      <Route path="/t/:userDetails">
         <UserDetails />
       </Route>
 
-        {/* <AdminPage /> */}
+      <Route path="/forAdminOnly">
+        <AdminPage />
+      </Route>
 
+      <Route exact path="/addaddfine9xvds5">
+                <Fine />
+            </Route>
         {/* <Fine/> */}
+    </Switch>
     </div>
   );
 }

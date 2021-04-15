@@ -5,10 +5,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// Original design here: https://github.com/siriwatknp/mui-treasury/issues/540
 
-const SelectComponent = () => {
-  const [val,setVal] = useState(1);
+const SelectComponent = (props) => {
+  const [val,setVal] = useState("");
+
+  const options = props.options
+  const getId = props.getId
+
+
+  React.useEffect(()=>{
+    getId(val)
+
+    return function cleanup() {
+      getId("")
+  }
+
+  },[val])
 
   const handleChange = (event) => {
     setVal(event.target.value);
@@ -49,10 +61,12 @@ const SelectComponent = () => {
         value={val}
         onChange={handleChange}
       >
-        <MenuItem value={0}>Principle</MenuItem>
-        <MenuItem value={1}>Sketch</MenuItem>
-        <MenuItem value={2}>Photoshop</MenuItem>
-        <MenuItem value={3}>Framer</MenuItem>
+        {
+          options?.map((option,index) => (
+            <MenuItem value={option.id} key={option.id}>{option.name}</MenuItem>
+          ))
+        }
+        
       </Select>
     </FormControl>
   );

@@ -30,7 +30,7 @@ function UserList() {
             <div className="userList__userCart"  >
 
                { users.map((user,index)=>(
-                   <Link to={`/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
+                   <Link to={`/t/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
                        <div >
                        <UserCard name={user.data.displayName} url={user.data.avatar} totalFine={user.data.totalFine} totalFinePaid={user.data.totalFinePaid} fineDue={user.data.fineDue} id={user.id}/>
                    </div>
