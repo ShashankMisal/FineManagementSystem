@@ -4,7 +4,6 @@
     align-items: center;
     flex-direction: column;
     margin-top: 20px;
-    height: 600px;
 }
 
 .selectIntern{
@@ -17,3 +16,8 @@
 .selectIntern > Button{
     margin: 20px;
 }
+
+.selectFinePopup{
+    margin: 20px;
+}
+

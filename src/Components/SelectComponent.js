@@ -13,14 +13,10 @@ const SelectComponent = (props) => {
   const getId = props.getId
 
 
-  React.useEffect(()=>{
-    getId(val)
-
-    return function cleanup() {
-      getId("")
-  }
-
-  },[val])
+ 
+    if(props?.getId)
+      getId(val)
+  
 
   const handleChange = (event) => {
     setVal(event.target.value);

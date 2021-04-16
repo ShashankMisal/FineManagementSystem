@@ -1,3 +1,16 @@
+.userDetials__personalInfo{
+    width: 100%;
+}
+
+.MuiCardContent-root{
+    background-color: rgb(7 0 32);
+    color: white;
+}
+
+.makeStyles-heading-201{
+    color: white;
+}
+
 .userDetails__fineTable{
     margin: 20px;
     width: 90%;

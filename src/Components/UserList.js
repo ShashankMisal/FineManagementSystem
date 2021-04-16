@@ -4,6 +4,9 @@ import SearchBar from './SearchBar.js'
 import UserCard  from './UserCard'
 import db from '../firebase.js'
 import {Link} from 'react-router-dom'
+import Slide from '@material-ui/core/Slide';
+import Grow from '@material-ui/core/Grow';
+
 
 function UserList() {
 
@@ -31,8 +34,11 @@ function UserList() {
 
                { users.map((user,index)=>(
                    <Link to={`/t/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
+
                        <div >
-                       <UserCard name={user.data.displayName} url={user.data.avatar} totalFine={user.data.totalFine} totalFinePaid={user.data.totalFinePaid} fineDue={user.data.fineDue} id={user.id}/>
+                       <Grow>
+                       <UserCard name={user.data.displayName} url={user.data.avatar} totalFinePaid={user.data.totalFinePaid} designation={user.data.designation} fineDue={user.data.fineDue} id={user.id}/>
+                        </Grow>
                    </div>
                    </Link>
                     ) )

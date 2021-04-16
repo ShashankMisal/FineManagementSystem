@@ -58,6 +58,7 @@ export default function AddNewUser() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [url, setUrl] = React.useState("");
+  const [designation, setDesignation] = React.useState("");
   const [popup, setPopup] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -66,7 +67,7 @@ export default function AddNewUser() {
   const handleClose = (e) => {
     e.preventDefault();
     setOpen(false);
-    if(name!=="" && url!=="")
+    if(name!=="" && url!=="" && designation!=="")
     {
     db.collection('users').add({
       avatar: url,
@@ -74,7 +75,8 @@ export default function AddNewUser() {
       displayName: name,
       fineDue:0,
       totalFine:0,
-      totalFinePaid:0
+      totalFinePaid:0,
+      designation:designation
   })
 
   
@@ -85,7 +87,8 @@ export default function AddNewUser() {
   };
 
   const style = {
-      margin:"10px"
+      margin:"5px",
+      width:"100%"
   }
   
 
@@ -125,6 +128,17 @@ export default function AddNewUser() {
           value={url}
           name="url"
           onChange={e => setUrl(e.target.value)}
+          />
+          <TextField
+          style={style}
+          id="outlined-textarea"
+          label="Designation"
+          placeholder="Enter Designation.."
+          multiline
+          variant="outlined"
+          value={designation}
+          name="designation"
+          onChange={e => setDesignation(e.target.value)}
           />
          
           </div>

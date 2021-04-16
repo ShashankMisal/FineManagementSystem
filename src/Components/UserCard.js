@@ -53,7 +53,7 @@ const useStyles = makeStyles(({ palette }) => ({
 export const UserCard = React.memo(function ProfileCard(props) {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
-  const {name,url,id} = props
+  const {name,url,id,designation} = props
   const borderedGridStyles = useGutterBorderedGridStyles({
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '60%',
@@ -68,26 +68,18 @@ export const UserCard = React.memo(function ProfileCard(props) {
       <CardContent>
         <Avatar className={styles.avatar} src={url} />
         <h3 className={styles.heading}>{name}</h3>
-        <span className={styles.subheader}>Poland</span>
+        <span className={styles.subheader}>{designation}</span>
       </CardContent>
       <Divider light />
       <Box display={'flex'}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Total Fine</p>
-          <p className={styles.statValue}>{props.totalFine}</p>
-        </Box> 
-        {
-          props.varient2
-          ?( <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
           <p className={styles.statLabel}>Total Fine Paid</p>
-          <p className={styles.statValue}>{props.totalFinePaid}</p>
-        </Box>)
-          :("")
-        }
+          <p className={styles.statValue}>₹{props.totalFinePaid}</p>
+        </Box> 
        
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
           <p className={styles.statLabel}>Fine Due</p>
-          <p className={styles.statValue}>{props.fineDue}</p>
+          <p className={styles.statValue}>₹{props.fineDue}</p>
         </Box>
       </Box>
     </Card>

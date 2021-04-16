@@ -13,7 +13,7 @@ function UserDetails() {
     const [fines,setFines] = React.useState([])
     const [summary,setSummary] = React.useState([])
 
-    const {totalFine,fineDue,totalFinePaid,displayName,avatar} = summary || ""
+    const {fineDue,totalFinePaid,displayName,avatar,designation} = summary || ""
     
     React.useEffect(()=>{
         if(userDetails){
@@ -23,7 +23,10 @@ function UserDetails() {
             })
           
           db.collection('users').doc(userDetails).collection('fines').onSnapshot(snapshot => {
-                setFines(snapshot.docs.map((doc) => doc.data()))
+            setFines(snapshot.docs.map((doc) => ({
+                finesid:doc.id,
+                data:doc.data()
+            })))
             })
         }
     },[])
@@ -33,7 +36,7 @@ function UserDetails() {
     return (
         <div className="userDetails">
             <div className="userDetials__personalInfo">
-                <UserCard name={displayName} url={avatar} totalFine={totalFine} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
+                <UserCard name={displayName} url={avatar} totalFinePaid={totalFinePaid} designation={designation} fineDue={fineDue} varient2/>
             </div>
             <div className="userDetails__fineTable">
             <FineTable fines={fines} />

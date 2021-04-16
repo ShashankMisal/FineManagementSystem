@@ -16,54 +16,57 @@ import { blue } from '@material-ui/core/colors';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { DialogActions, DialogContent } from '@material-ui/core';
 import SelectComponent from './SelectComponent';
+import TextField from '@material-ui/core/TextField';
+import db from '../firebase.js'
+import firebase from "firebase/app";
 
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-const useStyles = makeStyles({
-    avatar: {
-        backgroundColor: blue[100],
-        color: blue[600],
-    },
-});
 
-function SimpleDialog(props) {
-    const classes = useStyles();
-    const { onClose, selectedValue, open } = props;
-
-    const handleClose = () => {
-        onClose(selectedValue);
-    };
-
-    const handleListItemClick = (value) => {
-        onClose(value);
-    };
-
-    return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-
-        </Dialog>
-    );
-}
-
-SimpleDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
-};
-
-export default function SelectFinePopup() {
+export default function SelectFinePopup(props) {
     const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+    const [fine,setFine] = React.useState(5)
+    const [summary,setSummary] = React.useState([])
+
+
+    const {id} = props
+
+    React.useEffect(() => {
+        if(id){ 
+            db.collection('users').doc(id).onSnapshot(snapshot => {
+                setSummary(snapshot.data())
+            })
+        }
+    },[id]);
+
+    const {fineDue,totalFinePaid,displayName,avatar} = summary || ""
+    
 
     const handleClickOpen = () => {
         setOpen(true);
+
     };
 
-    const handleClose = (value) => {
+    const handleClose = () => {
         setOpen(false);
-        setSelectedValue(value);
     };
+
+    const handlePost = ()=>{
+        if(id!=="" && fine!==0){
+            db.collection('users').doc(id).collection('fines').add({
+                fineAmount:fine,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isPaid:false
+            })
+            setFine(0);
+
+            db.collection('users').doc(id).update({fineDue:(parseInt(fineDue)+ parseInt(fine))})
+
+            alert("Fine Added")
+        }else{
+            alert("fine not added")
+        }      
+        setOpen(false);
+    }
 
     return (
         <div>
@@ -75,23 +78,33 @@ export default function SelectFinePopup() {
             >
                 Add Fine
          </Button>
-            <Dialog selectedValue={selectedValue} open={open} onClose={handleClose} >
+            <Dialog open={open} onClose={handleClose} >
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Add New User...
+                    Apply Fine...
                 </DialogTitle>
 
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        Please Select the Type of Fine...
+                        Please Enter Fine Amount...
                     </Typography>
                     
-                    <SelectComponent/>
+                    <TextField
+                        id="standard-number"
+                        label="Number"
+                        value={fine}
+                        onChange={(e) => setFine(e.target.value)}
+                        type="number"
+                        InputProps={{ inputProps: { min: 5, max: 150 } }}
+                        margin="normal"
+                        style={{width:"90%"}}
+                        required
+                        />
 
 
                 </DialogContent>
 
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                    <Button autoFocus onClick={handlePost} color="primary">
                         Add
                     </Button>
                 </DialogActions>

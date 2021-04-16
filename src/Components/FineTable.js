@@ -15,6 +15,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import {Link,useRouteMatch} from 'react-router-dom'
+import Grow from '@material-ui/core/Grow';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -92,7 +97,11 @@ export default function CustomPaginationActionsTable(props) {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const rows = props.fines.sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate())
+  const rows = props.fines.sort((a, b) => b.data.createdAt?.toDate() - a.data.createdAt?.toDate())  
+
+  const [updateStatusId,setUpdateStatusId] = React.useState("")
+  const {url,path} = useRouteMatch();
+
 
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -106,13 +115,20 @@ export default function CustomPaginationActionsTable(props) {
     setPage(0);
   };
 
+  const handleStatus = (props) =>{
+    console.log(props)
+  }
+
+  
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
       <TableHead>
-          <TableRow>
-            <TableCell>Fine Amount</TableCell>
-            <TableCell align="right">Fine Date</TableCell>
+          <TableRow style={{backgroundColor:"rgb(7 0 32)"}}>
+            <TableCell style={{color:"white"}}>Fine Amount</TableCell>
+            <TableCell style={{color:"white"}} align="right">Fine Date</TableCell>
+            <TableCell style={{color:"white"}} align="right"> Paid Status</TableCell>
           </TableRow>
         </TableHead>    
         <TableBody>
@@ -120,19 +136,39 @@ export default function CustomPaginationActionsTable(props) {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row,index) => (
-            <TableRow key={index}>
+            <TableRow key={index} >
               <TableCell component="th" scope="row">
-                {row.fineAmount}
+              ₹{row.data.fineAmount}
               </TableCell>
               <TableCell style={{ width: 110 }} align="right">
-                { new Date(row.createdAt?.toDate()).toLocaleDateString()}
+                { new Date(row.data.createdAt?.toDate()).toLocaleDateString()}
               </TableCell>
+
+              <TableCell style={{ width: 110 }} align="right" value={index} >
+      
+              <Chip
+                icon={ row.data.isPaid
+                  ? <CheckCircleOutlineIcon style={{color:"white",fontSize:"25px"}} />
+                  : <FaceIcon style={{color:"white",fontSize:"25px"}} />}
+                  label= { row.data.isPaid ?"Paid" :"NotPaid"}
+                 onClick={ props.getFinesId ? () => props.getFinesId({
+                                                  updatefineId:row?.finesid,
+                                                  paidStatus:row.data?.isPaid,
+                                                  updatedStatusAmount:row.data?.fineAmount
+                                                }) : ()=>{}}
+                  color="default"
+                  style={ row.data.isPaid ? {backgroundColor:"green",color:"white"} : {backgroundColor:"#a61414",color:"white"}}
+                  /> 
+            
+
+              </TableCell>
+            
             </TableRow>
           ))}
 
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={4 } />
+              <TableCell colSpan={0} />
             </TableRow>
           )}
         </TableBody>
