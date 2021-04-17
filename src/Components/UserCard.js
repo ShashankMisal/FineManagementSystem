@@ -21,6 +21,7 @@ const useStyles = makeStyles(({ palette }) => ({
     width: 95,
     height: 95,
     margin: 'auto',
+    border:'2px solid #ffffff'
   },
   heading: {
     fontSize: 18,
@@ -53,7 +54,7 @@ const useStyles = makeStyles(({ palette }) => ({
 export const UserCard = React.memo(function ProfileCard(props) {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
-  const {name,url,id,designation} = props
+  const {name,url,designation} = props
   const borderedGridStyles = useGutterBorderedGridStyles({
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '60%',

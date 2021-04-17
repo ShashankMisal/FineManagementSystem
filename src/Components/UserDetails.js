@@ -4,6 +4,7 @@ import  UserCard from './UserCard';
 import FineTable from './FineTable'
 import {useParams} from 'react-router-dom'
 import db from '../firebase.js'
+import Footer from './Footer'
 
 
 function UserDetails() {
@@ -29,7 +30,7 @@ function UserDetails() {
             })))
             })
         }
-    },[])
+    },[userDetails])
 
 
 
@@ -41,6 +42,7 @@ function UserDetails() {
             <div className="userDetails__fineTable">
             <FineTable fines={fines} />
             </div>
+            <Footer/>
         </div>
     )
 }

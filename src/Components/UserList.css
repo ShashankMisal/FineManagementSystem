@@ -8,7 +8,8 @@
 .userList__userCart{
     min-width: 90%;
     width: 70%;
-    margin-top: 30px;   
+    margin-top: 30px;  
+    margin-bottom: 40px; 
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,5 +1,15 @@
+.userDetails{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .userDetials__personalInfo{
-    width: 100%;
+    margin: 20px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .MuiCardContent-root{
@@ -13,7 +23,8 @@
 
 .userDetails__fineTable{
     margin: 20px;
-    width: 90%;
+    width: 89%;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 50px;
 }

@@ -1,51 +1,47 @@
-.adminPage{
+.adminPage  {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100vh;
+    position: absolute;
+}
+
+.adminPage svg{
+    display: block;
+    position: absolute;
+    top: 0;
+    filter: drop-shadow(rgba(0, 0, 0, 0.24) 0px 3px 8px);
+}
+
+.adminActions{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 100vh;
-    overflow: hidden !important;
-    position: relative;
 }
 
-.adminPage::after{
-    content: "";
-    width: 100%;
-    height: 100%;
-    background: rgb(7 0 32);
-    border-radius: 275px / 340px;
-    position: absolute;
-    right: -85%;
-}
-
-.adminPage::before{
-    content: "";
-    width: 100%;
-    height: 100%;
-    background: rgb(7 0 32);
-    border-radius: 275px / 340px;
-    position: absolute;
-    left: -85%;
-}
-
-/* .adminPage__addNewUser{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-} */
-
-.adminPage > *{
-    min-width: 250px;
-    min-height: 250px;
+.adminActions > .addNewUser,.fineUser{
+    min-width: 12rem;
+    min-height: 12rem;
     margin: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    color: rgb(7,0,32);
     background-color: #f2f0fb;
+}
+
+.addNewUser{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
 
@@ -60,7 +56,7 @@
     text-align: center;
 }
 
-.adminPage > *:hover{
+.adminActions > *:hover{
     transition: all 0.2s; 
     transform: scale(1.1);
     cursor: pointer;
@@ -73,5 +69,6 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
 
 

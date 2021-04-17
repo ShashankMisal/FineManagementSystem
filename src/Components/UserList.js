@@ -4,8 +4,8 @@ import SearchBar from './SearchBar.js'
 import UserCard  from './UserCard'
 import db from '../firebase.js'
 import {Link} from 'react-router-dom'
-import Slide from '@material-ui/core/Slide';
 import Grow from '@material-ui/core/Grow';
+import Footer from './Footer'
 
 
 function UserList() {
@@ -45,6 +45,9 @@ function UserList() {
                 }
 
             </div>
+            
+            <Footer/>
+
         </div>
     )
 }

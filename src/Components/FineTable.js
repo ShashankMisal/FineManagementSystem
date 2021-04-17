@@ -18,8 +18,6 @@ import TableHead from '@material-ui/core/TableHead';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import {Link,useRouteMatch} from 'react-router-dom'
-import Grow from '@material-ui/core/Grow';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -99,8 +97,6 @@ export default function CustomPaginationActionsTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = props.fines.sort((a, b) => b.data.createdAt?.toDate() - a.data.createdAt?.toDate())  
 
-  const [updateStatusId,setUpdateStatusId] = React.useState("")
-  const {url,path} = useRouteMatch();
 
 
 
@@ -115,9 +111,6 @@ export default function CustomPaginationActionsTable(props) {
     setPage(0);
   };
 
-  const handleStatus = (props) =>{
-    console.log(props)
-  }
 
   
 
@@ -145,7 +138,7 @@ export default function CustomPaginationActionsTable(props) {
               </TableCell>
 
               <TableCell style={{ width: 110 }} align="right" value={index} >
-      
+            
               <Chip
                 icon={ row.data.isPaid
                   ? <CheckCircleOutlineIcon style={{color:"white",fontSize:"25px"}} />
@@ -159,8 +152,7 @@ export default function CustomPaginationActionsTable(props) {
                   color="default"
                   style={ row.data.isPaid ? {backgroundColor:"green",color:"white"} : {backgroundColor:"#a61414",color:"white"}}
                   /> 
-            
-
+     
               </TableCell>
             
             </TableRow>
@@ -173,7 +165,7 @@ export default function CustomPaginationActionsTable(props) {
           )}
         </TableBody>
         <TableFooter>
-          <TableRow>
+          <TableRow style={{backgroundColor:"#f2f0fb"}}>
               
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}

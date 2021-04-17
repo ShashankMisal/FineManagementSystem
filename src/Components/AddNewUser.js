@@ -59,7 +59,6 @@ export default function AddNewUser() {
   const [name, setName] = React.useState("");
   const [url, setUrl] = React.useState("");
   const [designation, setDesignation] = React.useState("");
-  const [popup, setPopup] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,7 +79,6 @@ export default function AddNewUser() {
   })
 
   
-    setPopup(true)
     setName("");
     setUrl("");
     }
@@ -95,7 +93,7 @@ export default function AddNewUser() {
   return (
     <div>
       <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"black"}} />
+            <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)",marginTop:"-30px"}} />
         </IconButton>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>

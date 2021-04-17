@@ -4,6 +4,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import './SelectComponent.css'
 
 
 const SelectComponent = (props) => {
@@ -11,7 +12,7 @@ const SelectComponent = (props) => {
 
   const options = props.options
   const getId = props.getId
-
+  
 
  
     if(props?.getId)

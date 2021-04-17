@@ -7,7 +7,10 @@ import UserCard from './UserCard';
 import SelectFinePopup from './SelectFinePopup';
 import db from '../firebase.js'
 import FineTable from './FineTable'
-import {Route,useParams,useRouteMatch} from 'react-router-dom'
+import Tooltip from '@material-ui/core/Tooltip';
+import Footer from './Footer'
+
+
 
 function Fine() {
 
@@ -19,11 +22,10 @@ function Fine() {
     const [updateFinesId,setUpdateFinesId] = React.useState("")
     const [paidStatus,setPaidStatus] = React.useState()
     const [updatedStatusAmount,setUpdatedStatusAmount] = React.useState(0)
-    const {url,path} = useRouteMatch();
+
 
     const {designation,totalFine,fineDue,totalFinePaid,displayName,avatar} = summary || ""
 
-    
     React.useEffect(()=>{
          db.collection('users').onSnapshot( snapshot => ( 
                 setUserNames(snapshot.docs.map(doc => (
@@ -35,19 +37,17 @@ function Fine() {
             ))
         ));
         
-        
 
     },[]);
 
     React.useEffect(()=>{
         if(updateFinesId!=="" && id!==""){
-           
         const fineDoc = db.collection('users').doc(id)
         const fineDoc2 = fineDoc.collection('fines').doc(updateFinesId)
         fineDoc2.update({isPaid:!(paidStatus)}).then((res)=>{
             console.log("res:",res)
         }).catch((err)=>console.log(err)) 
- 
+        
     }
     },[updateFinesId,paidStatus]);
 
@@ -56,7 +56,9 @@ function Fine() {
       
         db.collection('users').doc(id).update({
             totalFinePaid: (paidStatus===false)
-                            ?(parseInt(totalFinePaid) + parseInt(updatedStatusAmount))
+                            ?(
+                                parseInt(totalFinePaid) + parseInt(updatedStatusAmount)
+                            )
                             :(parseInt(totalFinePaid) - parseInt(updatedStatusAmount))
                         })
 
@@ -68,10 +70,6 @@ function Fine() {
     },[paidStatus,updateFinesId]);
 
 
-    // const updateDoc = ()=>{
-    //     console.log("in")
-      
-    // }
 
 
     const getFinesId = ({updatefineId,paidStatus,updatedStatusAmount}) =>{
@@ -106,8 +104,9 @@ function Fine() {
     return (
         <div className="fine">
              <div className="selectIntern">
+            
                 <SelectComponent options={userNames} getId={getId} />
-
+           
                 <Button
                     variant="contained"
                     color="default"
@@ -139,7 +138,7 @@ function Fine() {
             </>
             ):""
            }
-
+            <Footer/>
 
         </div>
     )
