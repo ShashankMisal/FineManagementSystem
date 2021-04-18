@@ -5,18 +5,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './SelectComponent.css'
-
+import {idContext} from './Fine.js'
 
 const SelectComponent = (props) => {
   const [val,setVal] = useState("");
 
-  const options = props.options
-  const getId = props.getId
+  const getId = React.useContext(idContext)
+
+  const options = props.options.sort((a,b)=>{ return a.name.localeCompare(b.name)})
+
   
 
- 
-    if(props?.getId)
-      getId(val)
+React.useEffect(()=>{
+    getId(val)
+},[val,getId])
   
 
   const handleChange = (event) => {

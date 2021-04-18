@@ -73,7 +73,6 @@ export default function AddNewUser() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       displayName: name,
       fineDue:0,
-      totalFine:0,
       totalFinePaid:0,
       designation:designation
   })
@@ -93,7 +92,7 @@ export default function AddNewUser() {
   return (
     <div>
       <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)",marginTop:"-30px"}} />
+            <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
         </IconButton>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>

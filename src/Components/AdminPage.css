@@ -1,4 +1,4 @@
-.adminPage  {
+.adminPage {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -7,9 +7,11 @@
     flex-wrap: wrap;
     height: 100vh;
     position: absolute;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.adminPage svg{
+.adminPage > svg{
     display: block;
     position: absolute;
     top: 0;
@@ -37,12 +39,12 @@
     background-color: #f2f0fb;
 }
 
-.addNewUser{
+/* .addNewUser{
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
-}
+} */
 
 
 
@@ -51,13 +53,13 @@
     font-size: 4rem;
 }
 
-.fineUser span{
-    width: 100%;
+.fineUser > span{
+    width: 100% !important;
     text-align: center;
 }
 
 .adminActions > *:hover{
-    transition: all 0.2s; 
+    transition: all 0.08s; 
     transform: scale(1.1);
     cursor: pointer;
 }
@@ -70,5 +72,29 @@
     flex-wrap: wrap;
 }
 
+.calculateBtn{
+    color:white !important;
+    font-size:1rem !important;
+    background-color:rgb(7 0 32) !important;
+    margin: 12px !important;
+}
 
 
+
+
+@media only screen and (max-width: 640px) {
+
+    .adminPage{
+        font-size: 2rem !important;
+    }
+
+    .adminActions > .addNewUser,.fineUser{
+        min-width: 11rem;
+        min-height: 11rem;
+    }
+
+    .calculateBtn{
+        font-size: 0.6rem !important;
+    }
+
+  }

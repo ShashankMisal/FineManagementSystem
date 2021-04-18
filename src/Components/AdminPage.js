@@ -12,8 +12,6 @@ function AdminPage() {
     const [total, setTotal] = React.useState(0)
 
 
-    console.log("total",total)
-
     const calculateTotalFine = ()=>{
         if(total===0){
         db.collection('users').onSnapshot( snapshot => ( 
@@ -46,7 +44,7 @@ function AdminPage() {
                     </Link>
             </div>
 
-            <Button  variant="contained" color="primary" style={{color:"white",fontSize:"15px",backgroundColor:"rgb(7 0 32)",marginTop:"10px",marginBottom:"15px"}} onClick={calculateTotalFine}>
+            <Button  variant="contained" color="primary" className="calculateBtn" onClick={calculateTotalFine}>
                 Calculate Total Fine Collected:₹{total?total:"0"}
             </Button>
 

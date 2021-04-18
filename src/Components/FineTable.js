@@ -18,6 +18,9 @@ import TableHead from '@material-ui/core/TableHead';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import Switch from '@material-ui/core/Switch';
+import db from '../firebase.js'
+
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -99,7 +102,6 @@ export default function CustomPaginationActionsTable(props) {
 
 
 
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
@@ -111,10 +113,35 @@ export default function CustomPaginationActionsTable(props) {
     setPage(0);
   };
 
+   const handleStatusChange = (fineid,isPaid,fineAmount) =>{
 
-  
+      if(fineid!==""){
+            
+          const fineDoc = db.collection('users').doc(props.toUpdateUserId)
+            const fineDoc2 = fineDoc.collection('fines').doc(fineid)
+            fineDoc2.update({isPaid:!(isPaid)}).then((res)=>{
+                console.log("res:",res)
+            }).catch((err)=>console.log(err)) 
+
+          
+          db.collection('users').doc(props?.toUpdateUserId).update({
+            totalFinePaid: (isPaid===false)
+                            ?(parseInt(props?.summary.totalFinePaid) + parseInt(fineAmount))
+                            :(parseInt(props?.summary.totalFinePaid) - parseInt(fineAmount))
+                        })
+
+         db.collection('users').doc(props?.toUpdateUserId).update({fineDue:(isPaid===false)
+                            ?(parseInt(props?.summary.fineDue) - parseInt(fineAmount))
+                            :(parseInt(props?.summary.fineDue) + parseInt(fineAmount))
+        })
+      }
+  }
+
+ 
+ 
 
   return (
+    <>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
       <TableHead>
@@ -139,21 +166,28 @@ export default function CustomPaginationActionsTable(props) {
 
               <TableCell style={{ width: 110 }} align="right" value={index} >
             
-              <Chip
+              {props.toUpdateUserId ?
+                    <Switch
+                    checked={row.data.isPaid}
+                    onChange={()=>{handleStatusChange(row?.finesid,row.data?.isPaid,row.data?.fineAmount)}}
+                    color="primary"
+                    name="checkedB"
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                    style={ row.data.isPaid?{color:"#1a6c1a"}:{color:"#ba0101"}}
+                    />
+                :(
+                <Chip
                 icon={ row.data.isPaid
-                  ? <CheckCircleOutlineIcon style={{color:"white",fontSize:"25px"}} />
-                  : <FaceIcon style={{color:"white",fontSize:"25px"}} />}
-                  label= { row.data.isPaid ?"Paid" :"NotPaid"}
-                 onClick={ props.getFinesId ? () => props.getFinesId({
-                                                  updatefineId:row?.finesid,
-                                                  paidStatus:row.data?.isPaid,
-                                                  updatedStatusAmount:row.data?.fineAmount
-                                                }) : ()=>{}}
+                  ? <CheckCircleOutlineIcon style={{color:"white",fontSize:"22px"}} />
+                  : <FaceIcon style={{color:"white",fontSize:"22px"}} />}
+                  label= { row.data.isPaid ?"Paid" :"Not-Paid"}
                   color="default"
-                  style={ row.data.isPaid ? {backgroundColor:"green",color:"white"} : {backgroundColor:"#a61414",color:"white"}}
+                  style={ row.data.isPaid ? {background:"linear-gradient(to right, #000000, #0f9b0f)",color:"white"} : {background:"linear-gradient(to right, rgb(255 25 0), rgb(70 4 4))",color:"white"}}
                   /> 
-     
+                )}
               </TableCell>
+
+              
             
             </TableRow>
           ))}
@@ -185,5 +219,7 @@ export default function CustomPaginationActionsTable(props) {
         </TableFooter>
       </Table>
     </TableContainer>
+   
+    </>
   );
 }

@@ -25,14 +25,19 @@ function UserList() {
         ));
 
     },[]);
+
+        users.sort((a,b)=>{
+        return a.data.displayName.localeCompare(b.data.displayName);
+    })
   
 
     return (
         <div className="userList" >
             <SearchBar/>
-            <div className="userList__userCart"  >
+            <div className="userList__userCart" >
 
-               { users.map((user,index)=>(
+               { 
+               users.map((user,index)=>(
                    <Link to={`/t/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
 
                        <div >

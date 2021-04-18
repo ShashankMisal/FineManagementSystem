@@ -31,7 +31,9 @@
     position: fixed;
     bottom: 0;
     z-index: -10;
+    filter: drop-shadow( rgba(14, 30, 37, 0.12));
   }
+
 
 @media only screen and (max-width: 640px) {
     .title{
@@ -42,5 +44,4 @@
         font-size: 1.5rem;
     }
   }
-
 

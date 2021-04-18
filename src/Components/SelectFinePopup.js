@@ -25,6 +25,11 @@ export default function SelectFinePopup(props) {
                 setSummary(snapshot.data())
             })
         }
+
+        return ()=>{
+            
+        }
+
     },[id]);
 
     const {fineDue} = summary || ""

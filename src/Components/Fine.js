@@ -7,10 +7,10 @@ import UserCard from './UserCard';
 import SelectFinePopup from './SelectFinePopup';
 import db from '../firebase.js'
 import FineTable from './FineTable'
-import Tooltip from '@material-ui/core/Tooltip';
 import Footer from './Footer'
 
 
+export const idContext = React.createContext("")
 
 function Fine() {
 
@@ -19,12 +19,10 @@ function Fine() {
     const [summary,setSummary] = React.useState([])
     const [showFineButton,setShowFineButton] = React.useState(false)
     const [fines,setFines] = React.useState([])
-    const [updateFinesId,setUpdateFinesId] = React.useState("")
-    const [paidStatus,setPaidStatus] = React.useState()
-    const [updatedStatusAmount,setUpdatedStatusAmount] = React.useState(0)
 
 
-    const {designation,totalFine,fineDue,totalFinePaid,displayName,avatar} = summary || ""
+
+    const {designation,fineDue,totalFinePaid,displayName,avatar} = summary || ""
 
     React.useEffect(()=>{
          db.collection('users').onSnapshot( snapshot => ( 
@@ -40,44 +38,7 @@ function Fine() {
 
     },[]);
 
-    React.useEffect(()=>{
-        if(updateFinesId!=="" && id!==""){
-        const fineDoc = db.collection('users').doc(id)
-        const fineDoc2 = fineDoc.collection('fines').doc(updateFinesId)
-        fineDoc2.update({isPaid:!(paidStatus)}).then((res)=>{
-            console.log("res:",res)
-        }).catch((err)=>console.log(err)) 
-        
-    }
-    },[updateFinesId,paidStatus]);
 
-    React.useEffect(()=>{
-        if(updateFinesId!=="" && id!==""){
-      
-        db.collection('users').doc(id).update({
-            totalFinePaid: (paidStatus===false)
-                            ?(
-                                parseInt(totalFinePaid) + parseInt(updatedStatusAmount)
-                            )
-                            :(parseInt(totalFinePaid) - parseInt(updatedStatusAmount))
-                        })
-
-         db.collection('users').doc(id).update({fineDue:(paidStatus===false)
-                            ?(parseInt(fineDue) - parseInt(updatedStatusAmount))
-                            :(parseInt(fineDue) + parseInt(updatedStatusAmount))
-        })
-        }
-    },[paidStatus,updateFinesId]);
-
-
-
-
-    const getFinesId = ({updatefineId,paidStatus,updatedStatusAmount}) =>{
-        setUpdateFinesId(updatefineId)
-        setPaidStatus(paidStatus)
-        setUpdatedStatusAmount(updatedStatusAmount)
-
-    }
    
     const getId = (temp) => {
         setId(temp)
@@ -105,8 +66,9 @@ function Fine() {
         <div className="fine">
              <div className="selectIntern">
             
+            <idContext.Provider value={setId}>
                 <SelectComponent options={userNames} getId={getId} />
-           
+           </idContext.Provider>
                 <Button
                     variant="contained"
                     color="default"
@@ -117,19 +79,16 @@ function Fine() {
                 </Button>
             </div> 
 
-        
-            
            { showFineButton?(
                <>
 
-
             <div>
-                <UserCard name={displayName} url={avatar} totalFine={totalFine} designation={designation} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
+                <UserCard name={displayName} url={avatar} designation={designation} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
             </div>
            
 
             <div style={{margin:"20px",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
-                <FineTable fines={fines} getFinesId={getFinesId} />
+                <FineTable fines={fines} toUpdateUserId={id} summary={summary}/>
             </div>
         
            
