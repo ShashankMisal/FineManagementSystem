@@ -95,7 +95,7 @@ export default function AddNewUser() {
             <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
         </IconButton>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
           Add New User...
         </DialogTitle>
         <DialogContent dividers>
@@ -140,8 +140,8 @@ export default function AddNewUser() {
          
           </div>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+        <DialogActions style={{backgroundColor:"rgb(7 0 32)"}}>
+          <Button autoFocus onClick={handleClose} color="primary" style={{color:"#f2f0fb"}}>
             Add
           </Button>
         </DialogActions>

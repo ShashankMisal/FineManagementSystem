@@ -74,13 +74,13 @@ export default function SelectFinePopup(props) {
                 Add Fine
          </Button>
             <Dialog open={open} onClose={handleClose} >
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
                     Apply Fine...
                 </DialogTitle>
 
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        Please Enter Fine Amount...
+                        Please Enter Fine Amount...        
                     </Typography>
                     
                     <TextField
@@ -98,9 +98,9 @@ export default function SelectFinePopup(props) {
 
                 </DialogContent>
 
-                <DialogActions>
+                <DialogActions style={{backgroundColor:"rgb(7 0 32)"}}>
 
-                    <Button autoFocus onClick={handlePost} color="primary" >
+                    <Button autoFocus onClick={handlePost} color="primary" style={{color:"#f2f0fb"}} >
                         Add
                     </Button>
                 </DialogActions>
