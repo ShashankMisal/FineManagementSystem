@@ -8,6 +8,7 @@ import SelectFinePopup from './SelectFinePopup';
 import db from '../firebase.js'
 import FineTable from './FineTable'
 import Footer from './Footer'
+import Collapse from '@material-ui/core/Collapse';
 
 
 export const idContext = React.createContext("")
@@ -19,7 +20,6 @@ function Fine() {
     const [summary,setSummary] = React.useState([])
     const [showFineButton,setShowFineButton] = React.useState(false)
     const [fines,setFines] = React.useState([])
-
 
 
     const {designation,fineDue,totalFinePaid,displayName,avatar} = summary || ""
@@ -40,10 +40,6 @@ function Fine() {
 
 
    
-    const getId = (temp) => {
-        setId(temp)
-    }
-
 
     const getData = () =>{
        if(id){ 
@@ -66,9 +62,10 @@ function Fine() {
         <div className="fine">
              <div className="selectIntern">
             
-            <idContext.Provider value={setId}>
-                <SelectComponent options={userNames} getId={getId} />
+            <idContext.Provider value={{setId,setShowFineButton}}>
+                <SelectComponent options={userNames} />
            </idContext.Provider>
+
                 <Button
                     variant="contained"
                     color="default"
@@ -79,13 +76,14 @@ function Fine() {
                 </Button>
             </div> 
 
+            <Collapse in={showFineButton} >
+            <div>
+                    <UserCard name={displayName} url={avatar} designation={designation} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
+            </div>
+                </Collapse>
+
            { showFineButton?(
                <>
-
-            <div>
-                <UserCard name={displayName} url={avatar} designation={designation} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
-            </div>
-           
 
             <div style={{margin:"20px",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
                 <FineTable fines={fines} toUpdateUserId={id} summary={summary}/>

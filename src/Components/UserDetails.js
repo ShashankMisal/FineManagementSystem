@@ -5,6 +5,7 @@ import FineTable from './FineTable'
 import {useParams} from 'react-router-dom'
 import db from '../firebase.js'
 import Footer from './Footer'
+import Zoom from '@material-ui/core/Zoom';
 
 
 function UserDetails() {
@@ -41,8 +42,11 @@ function UserDetails() {
 
     return (
         <div className="userDetails">
+
             <div className="userDetials__personalInfo">
+              <Zoom in>  
                 <UserCard name={displayName} url={avatar} totalFinePaid={totalFinePaid} designation={designation} fineDue={fineDue} varient2/>
+            </Zoom>
             </div>
             <div className="userDetails__fineTable">
             <FineTable fines={fines} />

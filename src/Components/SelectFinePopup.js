@@ -8,7 +8,7 @@ import { DialogActions, DialogContent } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import db from '../firebase.js'
 import firebase from "firebase/app";
-
+import Zoom from '@material-ui/core/Zoom';
 
 
 export default function SelectFinePopup(props) {
@@ -45,7 +45,7 @@ export default function SelectFinePopup(props) {
     };
 
     const handlePost = ()=>{
-        if(id!=="" && fine!==0){
+        if(id!=="" && fine>=5){
             db.collection('users').doc(id).collection('fines').add({
                 fineAmount:fine,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -77,7 +77,7 @@ export default function SelectFinePopup(props) {
                 <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
                     Apply Fine...
                 </DialogTitle>
-
+                <Zoom in >
                 <DialogContent dividers>
                     <Typography gutterBottom>
                         Please Enter Fine Amount...        
@@ -97,11 +97,11 @@ export default function SelectFinePopup(props) {
 
 
                 </DialogContent>
-
+                </Zoom>
                 <DialogActions style={{backgroundColor:"rgb(7 0 32)"}}>
 
                     <Button autoFocus onClick={handlePost} color="primary" style={{color:"#f2f0fb"}} >
-                        Add
+                        ADD
                     </Button>
                 </DialogActions>
             </Dialog>

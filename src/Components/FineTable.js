@@ -20,6 +20,8 @@ import FaceIcon from '@material-ui/icons/Face';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import Switch from '@material-ui/core/Switch';
 import db from '../firebase.js'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Slide from '@material-ui/core/Slide';
 
 
 const useStyles1 = makeStyles((theme) => ({
@@ -116,28 +118,47 @@ export default function CustomPaginationActionsTable(props) {
    const handleStatusChange = (fineid,isPaid,fineAmount) =>{
 
       if(fineid!==""){
+
+        const fineDoc = db.collection('users').doc(props.toUpdateUserId)
+        const fineDoc2 = fineDoc.collection('fines').doc(fineid)
+        fineDoc2.update({isPaid:!(isPaid)}).then((res)=>{
+        }).catch((err)=>console.log(err)) 
+
+
+        db.collection('users').doc(props?.toUpdateUserId).update({
+          totalFinePaid: (isPaid===false)
+                  ?(parseInt(props?.summary.totalFinePaid) + parseInt(fineAmount))
+                  :(parseInt(props?.summary.totalFinePaid) - parseInt(fineAmount))
+              }).then((res)=>{
+
+          }).catch((err)=>{
+            console.log(err)
+          })
+
+
+        db.collection('users').doc(props?.toUpdateUserId).update({fineDue:(isPaid===false)
+          ?(parseInt(props?.summary.fineDue) - parseInt(fineAmount))
+          :(parseInt(props?.summary.fineDue) + parseInt(fineAmount))
+            }).then((res)=>{
+                
+            }).catch((err)=>{
+                console.log(err)
+            })
+
             
-          const fineDoc = db.collection('users').doc(props.toUpdateUserId)
-            const fineDoc2 = fineDoc.collection('fines').doc(fineid)
-            fineDoc2.update({isPaid:!(isPaid)}).then((res)=>{
-                console.log("res:",res)
-            }).catch((err)=>console.log(err)) 
-
-          
-          db.collection('users').doc(props?.toUpdateUserId).update({
-            totalFinePaid: (isPaid===false)
-                            ?(parseInt(props?.summary.totalFinePaid) + parseInt(fineAmount))
-                            :(parseInt(props?.summary.totalFinePaid) - parseInt(fineAmount))
-                        })
-
-         db.collection('users').doc(props?.toUpdateUserId).update({fineDue:(isPaid===false)
-                            ?(parseInt(props?.summary.fineDue) - parseInt(fineAmount))
-                            :(parseInt(props?.summary.fineDue) + parseInt(fineAmount))
-        })
       }
   }
 
  
+  const loadingStyle = {
+    display:"flex",
+    justifyContent:"Center", 
+    alignItems:"center",
+    position:"relative",
+    top:"50%",
+    left:"90%",
+    margin:"30px",
+  }
  
 
   return (
@@ -150,13 +171,16 @@ export default function CustomPaginationActionsTable(props) {
             <TableCell style={{color:"white"}} align="right">Fine Date</TableCell>
             <TableCell style={{color:"white"}} align="right"> Paid Status</TableCell>
           </TableRow>
-        </TableHead>    
+        </TableHead>  
+
+      { (rows.length > 0)?(    
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row,index) => (
-            <TableRow key={index} >
+              <Slide in direction="down" key={index}>
+            <TableRow  >
               <TableCell component="th" scope="row">
               ₹{row.data.fineAmount}
               </TableCell>
@@ -188,8 +212,8 @@ export default function CustomPaginationActionsTable(props) {
               </TableCell>
 
               
-            
             </TableRow>
+              </Slide>
           ))}
 
           {emptyRows > 0 && (
@@ -198,6 +222,16 @@ export default function CustomPaginationActionsTable(props) {
             </TableRow>
           )}
         </TableBody>
+        ):(
+          <TableBody>
+              <TableRow>
+                  <TableCell style={loadingStyle}>
+                      <CircularProgress/>
+                  </TableCell>
+              </TableRow>
+          </TableBody>
+        )
+}
         <TableFooter>
           <TableRow style={{backgroundColor:"#f2f0fb"}}>
               

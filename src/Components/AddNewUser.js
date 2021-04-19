@@ -12,6 +12,9 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
 import firebase from "firebase/app";
 import db from '../firebase.js'
+import Slide from '@material-ui/core/Slide';
+
+
 
 
 const styles = (theme) => ({
@@ -98,6 +101,7 @@ export default function AddNewUser() {
         <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
           Add New User...
         </DialogTitle>
+        <Slide in direction="down">
         <DialogContent dividers>
           <Typography gutterBottom>
            To Add New User , Please Enter following details.
@@ -140,6 +144,7 @@ export default function AddNewUser() {
          
           </div>
         </DialogContent>
+      </Slide>
         <DialogActions style={{backgroundColor:"rgb(7 0 32)"}}>
           <Button autoFocus onClick={handleClose} color="primary" style={{color:"#f2f0fb"}}>
             Add

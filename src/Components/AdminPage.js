@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import db from '../firebase.js'
 import Button  from '@material-ui/core/Button';
 import Footer from './Footer'
+import Grow from '@material-ui/core/Grow';
 
 
 function AdminPage() {
@@ -33,21 +34,25 @@ function AdminPage() {
             <div className="adminActions">
 
                 <div className="addNewUser">
+                <Grow in >
                     <AddNewUser />
+                </Grow>
                 </div>
 
-                    
                     <Link to="/addaddfine9xvds5" style={{textDecoration:"none",color:"black"}}>
+                    <Grow in style={{transitionDelay:"100ms"}}>
                         <div className="fineUser">
                             <span>FINE</span>
                         </div>
+                    </Grow>
                     </Link>
             </div>
 
-            <Button  variant="contained" color="primary" className="calculateBtn" onClick={calculateTotalFine}>
-                Calculate Total Fine Collected:₹{total?total:"0"}
-            </Button>
-
+            <Grow in style={{transitionDelay:"100ms"}}>
+                <Button  variant="contained" color="primary" className="calculateBtn" onClick={calculateTotalFine}>
+                    Calculate Total Fine Collected:₹{total?total:"0"}
+                </Button>
+            </Grow>
                
 
             <Footer/>

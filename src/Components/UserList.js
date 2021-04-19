@@ -6,6 +6,7 @@ import db from '../firebase.js'
 import {Link} from 'react-router-dom'
 import Grow from '@material-ui/core/Grow';
 import Footer from './Footer'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 function UserList() {
@@ -34,23 +35,28 @@ function UserList() {
     return (
         <div className="userList" >
             <SearchBar/>
-            <div className="userList__userCart" >
 
+            { 
+                users ?(
+
+            <div className="userList__userCart" >
                { 
                users.map((user,index)=>(
-                   <Link to={`/t/${user.id}`} key={user.id} style={{ textDecoration: 'none' }}>
-
-                       <div >
-                       <Grow>
-                       <UserCard name={user.data.displayName} url={user.data.avatar} totalFinePaid={user.data.totalFinePaid} designation={user.data.designation} fineDue={user.data.fineDue} id={user.id}/>
+                   <Link to={`/t/${user?.id}`} key={user?.id} style={{ textDecoration: 'none' }}>
+                        <Grow in style={{ transitionDelay: index%2!==0 ? '50ms' : '0ms' }} >
+                        <div >
+                            <UserCard name={user?.data.displayName} url={user?.data.avatar} totalFinePaid={user?.data.totalFinePaid} designation={user?.data.designation} fineDue={user?.data.fineDue} id={user?.id}/>
+                        </div>
                         </Grow>
-                   </div>
-                   </Link>
+                    </Link>
                     ) )
                 }
 
             </div>
             
+            ):(
+                <CircularProgress />
+            )}
             <Footer/>
 
         </div>

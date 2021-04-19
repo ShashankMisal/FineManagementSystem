@@ -10,19 +10,22 @@ import {idContext} from './Fine.js'
 const SelectComponent = (props) => {
   const [val,setVal] = useState("");
 
-  const getId = React.useContext(idContext)
+  const idCon = React.useContext(idContext)
+
+  // console.log(idCon)
 
   const options = props.options.sort((a,b)=>{ return a.name.localeCompare(b.name)})
 
   
 
 React.useEffect(()=>{
-    getId(val)
-},[val,getId])
+    idCon.setId(val)
+},[val,idCon])
   
 
   const handleChange = (event) => {
     setVal(event.target.value);
+    idCon.setShowFineButton(false)
   };
 
   const minimalSelectClasses = useMinimalSelectStyles();

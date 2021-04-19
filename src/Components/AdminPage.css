@@ -59,7 +59,7 @@
 }
 
 .adminActions > *:hover{
-    transition: all 0.08s; 
+    transition: all 0.03s; 
     transform: scale(1.1);
     cursor: pointer;
 }
