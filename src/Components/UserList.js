@@ -6,12 +6,16 @@ import db from '../firebase.js'
 import {Link} from 'react-router-dom'
 import Grow from '@material-ui/core/Grow';
 import Footer from './Footer'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import ChooseBtn from './ChooseBtn'
+import MeetingsCard from './MeetingsCard'
 
+export const meetContext = React.createContext("")
 
 function UserList() {
 
     const [users, setUsers] = React.useState([])
+    const [meetings, setMeetings] = React.useState([])
+    const [chooseIndex, setChooseIndex] = React.useState(1)
 
 
     React.useEffect(()=>{
@@ -25,19 +29,42 @@ function UserList() {
             ))
         ));
 
+        db.collection('meetings').onSnapshot( snapshot => ( 
+            setMeetings(snapshot.docs.map(doc => (
+                {
+                    id: doc.id,
+                    data: doc.data()
+                }
+            
+        )))
+        ))
+       
+        
+        
     },[]);
+    
 
-        users.sort((a,b)=>{
+
+    users.sort((a,b)=>{
         return a.data.displayName.localeCompare(b.data.displayName);
     })
+
+    meetings.sort((a, b) => b.data.meetTimeDate?.toDate() - a.data.meetTimeDate?.toDate())
+    
   
 
     return (
         <div className="userList" >
             <SearchBar/>
-
+            
+            <div className="chooseBtn">
+                <ChooseBtn setChooseIndex={setChooseIndex}/>
+            </div>
+            
+            
+            
             { 
-                users ?(
+                chooseIndex===0 ?(
 
             <div className="userList__userCart" >
                { 
@@ -55,7 +82,28 @@ function UserList() {
             </div>
             
             ):(
-                <CircularProgress />
+                <div className="userList__userCart" >
+
+                   {
+                    meetings.map((meeting,index)=>(
+                        <div key={index} >
+                                 <Grow in style={{ transitionDelay: index%2!==0 ? '50ms' : '0ms' }} >
+                                 <meetContext.Provider value={{
+                                     title:meeting?.data.Title,
+                                     description:meeting?.data.Description,
+                                     meetTime:meeting?.data.meetTimeDate,
+                                     key:meeting?.id
+                                 }}> 
+                                        <MeetingsCard title={meeting?.data?.Title} description={meeting?.data?.Description} meetTimeDate={meeting?.data?.meetTimeDate} key={meeting.id} />
+                                 </meetContext.Provider>
+                             </Grow>
+                             </div>
+
+                         ) )
+                }
+            
+              
+              </div>
             )}
             <Footer/>
 

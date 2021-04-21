@@ -23,6 +23,7 @@ import db from '../firebase.js'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Slide from '@material-ui/core/Slide';
 
+import {meetingContext} from '../App'
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -92,15 +93,17 @@ TablePaginationActions.propTypes = {
 
 const useStyles2 = makeStyles({
   table: {
-    minWidth: 300,
+    minWidth: 50,
   },
 });
 
-export default function CustomPaginationActionsTable(props) {
+export default function FineTable(props) {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = props.fines.sort((a, b) => b.data.createdAt?.toDate() - a.data.createdAt?.toDate())  
+  const meetings = React.useContext(meetingContext)
+
 
 
 
@@ -151,13 +154,9 @@ export default function CustomPaginationActionsTable(props) {
 
  
   const loadingStyle = {
-    display:"flex",
-    justifyContent:"Center", 
-    alignItems:"center",
+
     position:"relative",
-    top:"50%",
-    left:"90%",
-    margin:"30px",
+    left:"50%",
   }
  
 
@@ -168,6 +167,7 @@ export default function CustomPaginationActionsTable(props) {
       <TableHead>
           <TableRow style={{backgroundColor:"rgb(7 0 32)"}}>
             <TableCell style={{color:"white"}}>Fine Amount</TableCell>
+            <TableCell style={{color:"white"}}>Meeting-Title</TableCell>
             <TableCell style={{color:"white"}} align="right">Fine Date</TableCell>
             <TableCell style={{color:"white"}} align="right"> Paid Status</TableCell>
           </TableRow>
@@ -179,11 +179,19 @@ export default function CustomPaginationActionsTable(props) {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row,index) => (
+
+
               <Slide in direction="down" key={index}>
             <TableRow  >
               <TableCell component="th" scope="row">
               ₹{row.data.fineAmount}
               </TableCell>
+              
+              <TableCell component="th" scope="row">
+                {meetings.find((meet)=> meet.id === row.data.meetingId)?.data.Title}
+              {/* {row.data.meetingId} */}
+              </TableCell>
+              
               <TableCell style={{ width: 110 }} align="right">
                 { new Date(row.data.createdAt?.toDate()).toLocaleDateString()}
               </TableCell>
@@ -206,6 +214,7 @@ export default function CustomPaginationActionsTable(props) {
                   : <FaceIcon style={{color:"white",fontSize:"22px"}} />}
                   label= { row.data.isPaid ?"Paid" :"Not-Paid"}
                   color="default"
+                  size="small"
                   style={ row.data.isPaid ? {background:"linear-gradient(to right, #000000, #0f9b0f)",color:"white"} : {background:"linear-gradient(to right, rgb(255 25 0), rgb(70 4 4))",color:"white"}}
                   /> 
                 )}
@@ -218,17 +227,17 @@ export default function CustomPaginationActionsTable(props) {
 
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={0} />
+              <TableCell colSpan={3} />
             </TableRow>
           )}
         </TableBody>
         ):(
           <TableBody>
-              <TableRow>
-                  <TableCell style={loadingStyle}>
-                      <CircularProgress/>
-                  </TableCell>
-              </TableRow>
+            <TableRow >
+            <TableCell style={loadingStyle}  >
+               <CircularProgress />
+            </TableCell>
+            </TableRow>
           </TableBody>
         )
 }
@@ -237,7 +246,7 @@ export default function CustomPaginationActionsTable(props) {
               
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
+              colSpan={4}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}

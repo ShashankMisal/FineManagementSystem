@@ -7,17 +7,19 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { DialogActions, DialogContent } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import db from '../firebase.js'
-import firebase from "firebase/app";
 import Zoom from '@material-ui/core/Zoom';
+import SelectComponent from './SelectComponent.js';
 
 
 export default function SelectFinePopup(props) {
     const [open, setOpen] = React.useState(false);
     const [fine,setFine] = React.useState(5)
     const [summary,setSummary] = React.useState([])
-
+    const [meetingIds,setMeetingIds] = React.useState([]);
+    const [updateMeetIds,setUpdateMeetIds] = React.useState("");
 
     const {id} = props
+
 
     React.useEffect(() => {
         if(id){ 
@@ -32,7 +34,28 @@ export default function SelectFinePopup(props) {
 
     },[id]);
 
-    const {fineDue} = summary || ""
+
+
+    React.useEffect(()=>{
+        db.collection('meetings').onSnapshot( snapshot => ( 
+               setMeetingIds(snapshot.docs.map(doc => (
+                   {
+                       id: doc.id,
+                       name: doc.data().Title,
+                       createdAt:doc.data().meetTimeDate
+                   }
+            ) 
+           ))
+       ));
+
+       return ()=>{
+            
+    }
+
+
+   },[]);
+
+    const {displayName,fineDue} = summary || ""
     
 
     const handleClickOpen = () => {
@@ -46,11 +69,33 @@ export default function SelectFinePopup(props) {
 
     const handlePost = ()=>{
         if(id!=="" && fine>=5){
+
+
+            const updateMeetIdDateTime = meetingIds.find((meet)=>{
+                return meet.id === updateMeetIds
+             })
+
+           
             db.collection('users').doc(id).collection('fines').add({
                 fineAmount:fine,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                isPaid:false
-            })
+                createdAt: updateMeetIdDateTime.createdAt,
+                isPaid:false,
+                meetingId:updateMeetIds,
+            }).then((res)=>{
+  
+                    db.collection('meetings').doc(updateMeetIds).collection('lateJoiners').add({
+                          userId: displayName,
+                          fineAmount: fine,
+                      })
+           
+
+
+            }).catch();
+
+            console.log(
+                    updateMeetIdDateTime
+                )
+
             setFine(0);
 
             db.collection('users').doc(id).update({fineDue:(parseInt(fineDue)+ parseInt(fine))})
@@ -58,9 +103,12 @@ export default function SelectFinePopup(props) {
             alert("Fine Added")
         }else{
             alert("fine not added")
+
         }      
         setOpen(false);
     }
+
+  
 
     return (
         <div>
@@ -85,7 +133,7 @@ export default function SelectFinePopup(props) {
                     
                     <TextField
                         id="standard-number"
-                        label="Number"
+                        label="FineAmount"
                         value={fine}
                         onChange={(e) => setFine(e.target.value)}
                         type="number"
@@ -94,6 +142,8 @@ export default function SelectFinePopup(props) {
                         style={{width:"90%"}}
                         required
                         />
+
+                        <SelectComponent options={meetingIds} Label={"Link Meeting :"} setId={setUpdateMeetIds}/>
 
 
                 </DialogContent>

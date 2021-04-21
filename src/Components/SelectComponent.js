@@ -6,6 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './SelectComponent.css'
 import {idContext} from './Fine.js'
+import FormHelperText from '@material-ui/core/FormHelperText';  
+
 
 const SelectComponent = (props) => {
   const [val,setVal] = useState("");
@@ -14,18 +16,20 @@ const SelectComponent = (props) => {
 
   // console.log(idCon)
 
-  const options = props.options.sort((a,b)=>{ return a.name.localeCompare(b.name)})
+  const options = props.sort ? (props.options?.sort((a,b)=>{ return a.name.localeCompare(b.name)})) : (props.options)
 
   
 
 React.useEffect(()=>{
-    idCon.setId(val)
-},[val,idCon])
+  if(props.setId)
+    props.setId(val)
+},[val,props])
   
 
   const handleChange = (event) => {
     setVal(event.target.value);
-    idCon.setShowFineButton(false)
+    if(idCon)
+    idCon?.setShowFineButton(false)
   };
 
   const minimalSelectClasses = useMinimalSelectStyles();
@@ -55,6 +59,8 @@ React.useEffect(()=>{
 
   return (
     <FormControl>
+    
+      <FormHelperText>{ props.Label}</FormHelperText>
       <Select
         disableUnderline
         classes={{ root: minimalSelectClasses.select }}
@@ -62,13 +68,13 @@ React.useEffect(()=>{
         IconComponent={iconComponent}
         value={val}
         onChange={handleChange}
-      >
+      > 
         {
           options?.map((option,index) => (
-            <MenuItem value={option.id} key={option.id}>{option.name}</MenuItem>
+            <MenuItem value={option?.id} key={option?.id}>{option?.name}</MenuItem>
           ))
         }
-        
+
       </Select>
     </FormControl>
   );

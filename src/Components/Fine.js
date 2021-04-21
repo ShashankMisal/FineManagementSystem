@@ -63,7 +63,7 @@ function Fine() {
              <div className="selectIntern">
             
             <idContext.Provider value={{setId,setShowFineButton}}>
-                <SelectComponent options={userNames} />
+                <SelectComponent options={userNames} Label={"Select User:"} setId={setId} sort/>
            </idContext.Provider>
 
                 <Button

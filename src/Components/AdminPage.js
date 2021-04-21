@@ -6,6 +6,7 @@ import db from '../firebase.js'
 import Button  from '@material-ui/core/Button';
 import Footer from './Footer'
 import Grow from '@material-ui/core/Grow';
+import AddNewMeeting from './AddNewMeeting';
 
 
 function AdminPage() {
@@ -46,7 +47,16 @@ function AdminPage() {
                         </div>
                     </Grow>
                     </Link>
+
             </div>
+
+
+                
+                    <Grow in style={{transitionDelay:"100ms"}}>
+                        
+                            <AddNewMeeting/>
+                    </Grow>
+                    
 
             <Grow in style={{transitionDelay:"100ms"}}>
                 <Button  variant="contained" color="primary" className="calculateBtn" onClick={calculateTotalFine}>
