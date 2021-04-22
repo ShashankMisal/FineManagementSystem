@@ -1,12 +1,11 @@
 import React from 'react'
 import UserList from './Components/UserList'
 import UserDetails from './Components/UserDetails'
-import AdminPage from './Components/AdminPage'
 import Main from './Components/Main';
-import Fine from './Components/Fine'
 import './App.css';
 import db from './firebase.js'
 import {Route,Switch} from 'react-router-dom'
+import SideDrawer from './Components/SideDrawer'
 
 export const totalM = React.createContext();
 export const meetingContext = React.createContext();
@@ -49,12 +48,9 @@ function App() {
 <totalM.Provider value={{totalEarned:totalEarned,updateTotalM:setTotalEarned}}>
 
       <Route path="/forAdminOnly">
-        <AdminPage />
+        <SideDrawer />
       </Route>
 
-      <Route exact path="/addaddfine9xvds5">
-                <Fine />
-            </Route>
             
             
 </totalM.Provider>

@@ -8,13 +8,11 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
 import db from '../firebase.js'
 import Slide from '@material-ui/core/Slide';
 import DateTimeUIPickers from './DateTimeUIPickers';
-
-
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 
 const styles = (theme) => ({
   root: {
@@ -93,7 +91,7 @@ export default function AddNewMeeting() {
   return (
     <div>
       <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
+            <AddToPhotosIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
         </IconButton>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>

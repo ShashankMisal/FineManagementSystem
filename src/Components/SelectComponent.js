@@ -16,7 +16,7 @@ const SelectComponent = (props) => {
 
   // console.log(idCon)
 
-  const options = props.sort ? (props.options?.sort((a,b)=>{ return a.name.localeCompare(b.name)})) : (props.options)
+  const options = props.sort === "name"? (props.options?.sort((a,b)=>{ return a.name.localeCompare(b.name)})) : (props.options.sort((a, b) => b.createdAt?.toDate() - a.createdAt?.toDate()))
 
   
 

@@ -15,7 +15,7 @@ function UserList() {
 
     const [users, setUsers] = React.useState([])
     const [meetings, setMeetings] = React.useState([])
-    const [chooseIndex, setChooseIndex] = React.useState(1)
+    const [chooseIndex, setChooseIndex] = React.useState(0)
 
 
     React.useEffect(()=>{

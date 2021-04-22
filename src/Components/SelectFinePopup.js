@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import db from '../firebase.js'
 import Zoom from '@material-ui/core/Zoom';
 import SelectComponent from './SelectComponent.js';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 
 export default function SelectFinePopup(props) {
@@ -108,7 +109,6 @@ export default function SelectFinePopup(props) {
         setOpen(false);
     }
 
-  
 
     return (
         <div>
@@ -116,8 +116,9 @@ export default function SelectFinePopup(props) {
                 onClick={handleClickOpen}
                 variant="contained"
                 color="default"
+                fullWidth
                 startIcon={<MonetizationOnIcon />}
-                style={{color:"white",fontSize:"17px",backgroundColor:"rgb(7,0,32)",margin:"8px",marginBottom:"25px"}}
+                style={{color:"white",fontSize:"17px",backgroundColor:"rgb(7,0,32)",marginBottom:"25px"}}
             >
                 Add Fine
          </Button>
@@ -143,8 +144,13 @@ export default function SelectFinePopup(props) {
                         required
                         />
 
-                        <SelectComponent options={meetingIds} Label={"Link Meeting :"} setId={setUpdateMeetIds}/>
+                        <div>
 
+
+                        <AttachFileIcon/>
+                        <SelectComponent options={meetingIds} Label={"Link Meeting :"}  setId={setUpdateMeetIds}/>
+
+                        </div>
 
                 </DialogContent>
                 </Zoom>

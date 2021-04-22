@@ -8,12 +8,11 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TextField from '@material-ui/core/TextField';
 import firebase from "firebase/app";
 import db from '../firebase.js'
 import Slide from '@material-ui/core/Slide';
-
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 
@@ -95,8 +94,9 @@ export default function AddNewUser() {
   return (
     <div>
       <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <AddCircleIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
+            <PersonAddIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
         </IconButton>
+
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
           Add New User...

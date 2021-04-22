@@ -2,13 +2,14 @@ import React from 'react'
 import "./Fine.css"
 import SelectComponent from './SelectComponent';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import Button  from '@material-ui/core/Button';
 import UserCard from './UserCard';
 import SelectFinePopup from './SelectFinePopup';
 import db from '../firebase.js'
 import FineTable from './FineTable'
 import Footer from './Footer'
 import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+
 
 
 export const idContext = React.createContext("")
@@ -63,38 +64,29 @@ function Fine() {
              <div className="selectIntern">
             
             <idContext.Provider value={{setId,setShowFineButton}}>
-                <SelectComponent options={userNames} Label={"Select User:"} setId={setId} sort/>
+                <SelectComponent options={userNames} Label={"Select User:"} setId={setId} sort="name"/>
            </idContext.Provider>
 
-                <Button
-                    variant="contained"
-                    color="default"
-                    startIcon={<CloudDownloadIcon />}
-                    onClick={getData}
-                    >
-                    Get Data
-                </Button>
+           <IconButton onClick={getData}>
+            <CloudDownloadIcon  style={{fontSize:"40px",color:"rgb(7 0 32)"}} />
+           </IconButton>
+                
             </div> 
 
+
+            <div className="flex-container" >
             <Collapse in={showFineButton} >
-            <div>
-                    <UserCard name={displayName} url={avatar} designation={designation} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
+            <div className="flex-items">
+            <UserCard name={displayName} url={avatar} designation={designation} totalFinePaid={totalFinePaid} fineDue={fineDue} varient2/>
+            <SelectFinePopup id={id}/>
             </div>
-                </Collapse>
 
-           { showFineButton?(
-               <>
-
-            <div style={{margin:"20px",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
-                <FineTable fines={fines} toUpdateUserId={id} summary={summary}/>
+            <div className="flex-items">
+            <FineTable fines={fines} toUpdateUserId={id} summary={summary}/>
             </div>
-        
-           
-
-            <div className="selectFinePopup"><SelectFinePopup id={id}/></div>
-            </>
-            ):""
-           }
+        </Collapse>
+        </div>
+       
             <Footer/>
 
         </div>
