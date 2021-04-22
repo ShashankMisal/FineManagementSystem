@@ -9,7 +9,7 @@ import FineTable from './FineTable'
 import Footer from './Footer'
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-
+import girl from './girl.svg'
 
 
 export const idContext = React.createContext("")
@@ -58,9 +58,19 @@ function Fine() {
         }
 
     }
+
+    const imgGStyle = {
+        widht:"150px",
+        height:"150px",
+        position:"relative",
+        top:"65px",
+    } 
+    
+    
     
     return (
         <div className="fine">
+            <img alt="img" src={girl} style={imgGStyle}/>
              <div className="selectIntern">
             
             <idContext.Provider value={{setId,setShowFineButton}}>

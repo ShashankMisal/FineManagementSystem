@@ -61,6 +61,10 @@
       width: 96% !important;
   }
 
+
+ 
+
+
   @media only screen and (max-width: 640px) {
     .flex-items:nth-child(1) > * {
         width: 99% !important;

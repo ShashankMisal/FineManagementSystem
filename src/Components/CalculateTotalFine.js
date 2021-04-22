@@ -27,7 +27,6 @@ export default  function CalculateTotalFine() {
     return (
             <div className="moneyContainer">
                 <img alt="money" src={tenor}/>  
-                <hr style={{width:"90%",color:"rgb(7 0 32)"}}/>
                  <h1>Total fine Collected : { total ? total:0}</h1> 
               </div>
 

@@ -12,7 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import db from '../firebase.js'
 import Slide from '@material-ui/core/Slide';
 import DateTimeUIPickers from './DateTimeUIPickers';
-import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+import meetings from './meetings.jpg'
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const styles = (theme) => ({
   root: {
@@ -89,9 +90,11 @@ export default function AddNewMeeting() {
   
 
   return (
-    <div>
-      <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <AddToPhotosIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
+    <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",backgroundImage:`url(${meetings})`, backgroundPosition: 'center',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat'}}>
+      <IconButton onClick={handleClickOpen}>
+            <AddBoxIcon  style={{fontSize:"70px",zIndex:"20",color:"rgb(48 61 96))",marginTop:"400px"}} />
         </IconButton>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>

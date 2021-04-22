@@ -12,8 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import firebase from "firebase/app";
 import db from '../firebase.js'
 import Slide from '@material-ui/core/Slide';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-
+import addUser from './addUser.jpg'
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 
 const styles = (theme) => ({
@@ -92,9 +92,11 @@ export default function AddNewUser() {
   
 
   return (
-    <div>
-      <IconButton aria-label="delete" onClick={handleClickOpen}>
-            <PersonAddIcon style={{fontSize:"90px",zIndex:"20",color:"rgb(7,0,32)"}} />
+    <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",backgroundImage:`url(${addUser})`, backgroundPosition: 'center',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat'}}>
+      <IconButton aria-label="delete" onClick={handleClickOpen} style={{position:"relative",bottom:"124px"}}>
+            <GroupAddIcon style={{fontSize:"110px",zIndex:"20",color:"rgb(27 46 53)"}} />
         </IconButton>
 
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
