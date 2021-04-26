@@ -49,7 +49,7 @@ function UserList() {
         return a.data.displayName.localeCompare(b.data.displayName);
     })
 
-    meetings.sort((a, b) => b.data.meetTimeDate?.toDate() - a.data.meetTimeDate?.toDate())
+    meetings.sort((a, b) => b.data?.meetTimeDate?.toDate() - a.data?.meetTimeDate?.toDate())
     
   
 
@@ -87,7 +87,7 @@ function UserList() {
                    {
                     meetings.map((meeting,index)=>(
                         <div key={index} >
-                                 <Grow in style={{ transitionDelay: index%2!==0 ? '50ms' : '0ms' }} >
+                                 {/* <Grow in style={{ transitionDelay: index%2!==0 ? '50ms' : '0ms' }} > */}
                                  <meetContext.Provider value={{
                                      title:meeting?.data.Title,
                                      description:meeting?.data.Description,
@@ -96,7 +96,7 @@ function UserList() {
                                  }}> 
                                         <MeetingsCard title={meeting?.data?.Title} description={meeting?.data?.Description} meetTimeDate={meeting?.data?.meetTimeDate} key={meeting.id} />
                                  </meetContext.Provider>
-                             </Grow>
+                             {/* </Grow> */}
                              </div>
 
                          ) )

@@ -1,117 +1,86 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import firebase from "firebase/app";
 import db from '../firebase.js'
-import Slide from '@material-ui/core/Slide';
 import addUser from './addUser.jpg'
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import Backdrop from '@material-ui/core/Backdrop';
+import Paper from '@material-ui/core/Paper';
+import manWalking from './manWalking.gif';
 
 
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  }
-});
+}));
 
-const DialogTitle = withStyles(styles)((props) => {
-  const { children, classes, onClose, ...other } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
 
 export default function AddNewUser() {
-  const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState("");
-  const [url, setUrl] = React.useState("");
-  const [designation, setDesignation] = React.useState("");
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = (e) => {
-    e.preventDefault();
-    setOpen(false);
-    if(name!=="" && url!=="" && designation!=="")
-    {
-    db.collection('users').add({
-      avatar: url,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      displayName: name,
-      fineDue:0,
-      totalFinePaid:0,
-      designation:designation
-  })
-
+  const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [name, setName] = React.useState("");
+    const [url, setUrl] = React.useState("");
+    const [designation, setDesignation] = React.useState("");
   
-    setName("");
-    setUrl("");
+   
+    const handleClose = (e) => {
+      e.preventDefault();
+      if(name!=="" && url!=="" && designation!=="")
+      {
+        setOpen(true)
+      db.collection('users').add({
+        avatar: url,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        displayName: name,
+        fineDue:0,
+        totalFinePaid:0,
+        designation:designation
+    }).then(()=>{
+      alert("user added")
+      setOpen(false)
+    })
+  
+  
+    
+      setName("");
+      setUrl("");
+      }else{
+        alert("Please Enter all Details")
+      }
+    };
+  
+    const textstyle = {
+        margin:"10px",
+        width:"95%",  
     }
-  };
-
-  const style = {
-      margin:"5px",
-      width:"100%"
-  }
+  
+    const btnstyle = {
+      width:"100%",
+      backgroundColor:"rgb(7 0 32)",
+      color:"white",
+      marginTop:"10px",
+    }
+    
   
 
   return (
-    <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",backgroundImage:`url(${addUser})`, backgroundPosition: 'center',
+    <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",alignItems:"center"}}>
+  <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+      <img src={manWalking} alt="loader" style={{borderRadius:"50%"}}/> 
+  </Backdrop>
+    <Paper elevation={11} style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"coloumn",backgroundImage:`url(${addUser})`, backgroundPosition: 'center',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat'}}>
-      <IconButton aria-label="delete" onClick={handleClickOpen} style={{position:"relative",bottom:"124px"}}>
-            <GroupAddIcon style={{fontSize:"110px",zIndex:"20",color:"rgb(27 46 53)"}} />
-        </IconButton>
 
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
-          Add New User...
-        </DialogTitle>
-        <Slide in direction="down">
-        <DialogContent dividers>
-          <Typography gutterBottom>
-           To Add New User , Please Enter following details.
-          </Typography>
+          <form >
+        <div className="textfields" >
+          
 
-        <div className="textfields">
-          <TextField
-          style={style}
+        <TextField
+          style={textstyle}
           id="outlined-textarea"
           label="Name"
           placeholder="Enter Name.."
@@ -122,7 +91,7 @@ export default function AddNewUser() {
           onChange={e => setName(e.target.value)}
           />
          <TextField
-          style={style}
+          style={textstyle}
           id="outlined-textarea"
           label="Avatar URL"
           placeholder="Enter Avatar URL.."
@@ -133,7 +102,7 @@ export default function AddNewUser() {
           onChange={e => setUrl(e.target.value)}
           />
           <TextField
-          style={style}
+          style={textstyle}
           id="outlined-textarea"
           label="Designation"
           placeholder="Enter Designation.."
@@ -143,16 +112,16 @@ export default function AddNewUser() {
           name="designation"
           onChange={e => setDesignation(e.target.value)}
           />
-         
+
+      {/* </Slide> */}
+       
           </div>
-        </DialogContent>
-      </Slide>
-        <DialogActions style={{backgroundColor:"rgb(7 0 32)"}}>
-          <Button autoFocus onClick={handleClose} color="primary" style={{color:"#f2f0fb"}}>
+          
+          <Button type="submit" autoFocus onClick={handleClose} color="primary" style={btnstyle}>
             Add
           </Button>
-        </DialogActions>
-      </Dialog>
+         </form>
+          </Paper>
     
     </div>
   );

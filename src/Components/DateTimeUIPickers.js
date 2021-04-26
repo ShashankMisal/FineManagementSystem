@@ -10,7 +10,7 @@ import {
 
 export default function DateTimeUIPickers(props) {
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-04-18T21:11:54'));
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,6 +30,7 @@ export default function DateTimeUIPickers(props) {
           id="date-picker-inline"
           label="Select Date"
           value={selectedDate}
+          style={{margin:"10px"}}
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
@@ -40,6 +41,7 @@ export default function DateTimeUIPickers(props) {
           margin="normal"
           id="time-picker"
           label="Select Time"
+          style={{margin:"10px"}}
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{

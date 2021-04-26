@@ -7,6 +7,7 @@ import db from './firebase.js'
 import {Route,Switch} from 'react-router-dom'
 import SideDrawer from './Components/SideDrawer'
 
+
 export const totalM = React.createContext();
 export const meetingContext = React.createContext();
 
@@ -44,6 +45,8 @@ function App() {
       <Route path="/t/:userDetails">
         <UserDetails />
       </Route>
+
+      
 
 <totalM.Provider value={{totalEarned:totalEarned,updateTotalM:setTotalEarned}}>
 

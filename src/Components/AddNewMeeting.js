@@ -1,116 +1,97 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import db from '../firebase.js'
-import Slide from '@material-ui/core/Slide';
 import DateTimeUIPickers from './DateTimeUIPickers';
-import meetings from './meetings.jpg'
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import meetings from './meetings.jpeg'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from "react-router-dom";
 
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
+
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  }
-});
+}));
 
-const DialogTitle = withStyles(styles)((props) => {
-  const { children, classes, onClose, ...other } = props;
-  return (
-    <MuiDialogTitle disableTypography className={classes.root} {...other}>
-      <Typography variant="h6">{children}</Typography>
-      {onClose ? (
-        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </MuiDialogTitle>
-  );
-});
 
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(1),
-  },
-}))(MuiDialogActions);
 
 export default function AddNewMeeting() {
-  const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [meetTimeDate, setMeetTimeDate] = React.useState("");
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [meetingTimeDate, setMeetTimeDate] = React.useState(new Date());
+  const [open, setOpen] = React.useState(false);
+  let history = useHistory();
+ 
   const handleClose = (e) => {
+  
     e.preventDefault();
-    setOpen(false);
-    if(title!=="" && description!=="" && meetTimeDate!=="")
+    if(title!=="" && description!=="" )
     {
-    db.collection('meetings').add({
-      Description: description,
-      Title: title,
-      meetTimeDate:meetTimeDate,
+      setOpen(true)
+    db.collection("meetings").add({
+      Description:description,
+      Title:title,
+      meetTimeDate:meetingTimeDate,
+  }).then((res)=>{
+    setOpen(false);
+    history.push("/forAdminOnly/addaddfine9xvds5");
+  }).catch((err)=>{
+    alert("Error in adding meet");
+    setOpen(false);
   })
+
 
   
     setTitle("");
     setDescription("");
     setMeetTimeDate("");
+
+    }else{
+      alert("Please Enter all Details")
     }
+
   };
 
-  const style = {
-      margin:"5px",
-      width:"100%"
+  const textstyle = {
+      margin:"10px",
+      width:"95%",  
+  }
+
+  const btnstyle = {
+    width:"100%",
+    backgroundColor:"rgb(7 0 32)",
+    color:"white",
+    marginTop:"10px",
   }
 
   
-
+  
+  
+  
   return (
-    <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",backgroundImage:`url(${meetings})`, backgroundPosition: 'center',
+    <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",alignItems:"center"}}>
+  
+  <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+      <CircularProgress color="inherit" />
+  </Backdrop>
+    <Paper elevation={14} style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"coloumn",backgroundImage:`url(${meetings})`, backgroundPosition: 'right',
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat'}}>
-      <IconButton onClick={handleClickOpen}>
-            <AddBoxIcon  style={{fontSize:"70px",zIndex:"20",color:"rgb(48 61 96))",marginTop:"400px"}} />
-        </IconButton>
-      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
-          Add New Meeting...
-        </DialogTitle>
-        <Slide in direction="down">
 
+          <form >
+        <div className="textfields" >
+          
 
-        <DialogContent dividers>
-          <Typography gutterBottom>
-           To Add New Meeting , Please Enter following details.
-          </Typography>
-
-        <div className="textfields">
           <TextField
-          style={style}
+          style={textstyle}
           id="outlined-textarea"
           label="Title"
           placeholder="Enter Title of Meeting.."
@@ -121,7 +102,7 @@ export default function AddNewMeeting() {
           onChange={e => setTitle(e.target.value)}
           />
          <TextField
-          style={style}
+          style={textstyle}
           id="outlined-textarea"
           label="Description"
           placeholder="Enter Short Description..."
@@ -133,17 +114,15 @@ export default function AddNewMeeting() {
           />
 
         <DateTimeUIPickers setMeetTimeDate={setMeetTimeDate}/>
-         
+      {/* </Slide> */}
+       
           </div>
-        </DialogContent>
-      </Slide>
-        <DialogActions style={{backgroundColor:"rgb(7 0 32)"}}>
-          <Button autoFocus onClick={handleClose} color="primary" style={{color:"#f2f0fb"}}>
+          
+          <Button type="submit" autoFocus onClick={handleClose} color="primary" style={btnstyle}>
             Add
           </Button>
-        </DialogActions>
-      </Dialog>
-    
+         </form>
+          </Paper>
     </div>
   );
 }
