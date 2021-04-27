@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useHistory } from "react-router-dom";
+import moneyLoader from './moneyLoader.gif'
+
 
 
 
@@ -80,7 +82,7 @@ export default function AddNewMeeting() {
     <div style={{height:"100vh",width:"100vw",display:"flex",justifyContent:"center",alignItems:"center"}}>
   
   <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-      <CircularProgress color="inherit" />
+  <img alt="money" src={moneyLoader} style={{borderRadius:"50%",border:"2px solid black"}}/>  
   </Backdrop>
     <Paper elevation={14} style={{display:"flex",justifyContent:"center",alignItems:"center",flexDirection:"coloumn",backgroundImage:`url(${meetings})`, backgroundPosition: 'right',
     backgroundSize: 'contain',
@@ -118,7 +120,7 @@ export default function AddNewMeeting() {
        
           </div>
           
-          <Button type="submit" autoFocus onClick={handleClose} color="primary" style={btnstyle}>
+          <Button type="submit" onClick={handleClose} color="primary" style={btnstyle}>
             Add
           </Button>
          </form>
