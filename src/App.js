@@ -25,17 +25,20 @@ function App() {
       
   )))
   ))
-  })
+  },[])
 
 
   return (
     <div className="app">
+
+
      
 <Switch>
         
      <meetingContext.Provider value={meetings}>
       <Route exact path="/">
         <Main />
+        
       </Route>
 
     <Route path="/main">
