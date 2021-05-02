@@ -7,6 +7,10 @@ const BarGraph = (props) => {
     return name.split(" ")[0]
   })
 
+  userNames.sort((a, b) => {
+    return a.localeCompare(b);
+});
+
   const colorArray = [
           
     "rgba(255, 255, 0, 1)" ,//yellow,
