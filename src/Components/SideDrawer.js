@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SideDrawer() {
   const classes = useStyles();
   let history = useHistory()
-  const [dispatch] = useStateValue();
+  const [,dispatch] = useStateValue();
 
   const [open, setOpen] = React.useState(false);
 

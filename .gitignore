@@ -10,6 +10,7 @@
 
 # production
 /build
+/firebase.js
 
 /config.js
 

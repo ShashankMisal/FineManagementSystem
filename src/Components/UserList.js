@@ -44,6 +44,10 @@ function UserList() {
                 }))
             )
         );
+        
+        return () => {
+          }
+
     }, []);
 
     users.sort((a, b) => {
