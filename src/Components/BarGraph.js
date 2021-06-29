@@ -10,22 +10,15 @@ const BarGraph = (props) => {
     return name.split(" ")[0]
   })
 
-  userNames.sort((a, b) => {
-    return a.localeCompare(b);
-});
 
-  const colorArray = [
-    "rgb(7 0 32)",//blueDarkShade 
-  ]
- 
   const data = {
     labels: userNames,
     datasets: [
       {
         label: "Total Fine Paid ₹",
         data: props.totalFinePaidAmounts,
-        backgroundColor: colorArray,
-        borderColor:colorArray,
+        backgroundColor: "rgba(7,0,32)",
+        borderColor:"rgba(7,0,32)",
       },
     ],  
   };
