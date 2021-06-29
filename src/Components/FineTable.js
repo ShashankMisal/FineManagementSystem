@@ -235,7 +235,13 @@ export default function FineTable(props) {
           <TableBody>
             <TableRow >
             <TableCell style={loadingStyle}  >
-               <CircularProgress />
+               {
+                 (rows.length === 0)?(
+                  "NO DATA.."
+                 ):(
+                 <CircularProgress />
+                 )
+               } 
             </TableCell>
             </TableRow>
           </TableBody>

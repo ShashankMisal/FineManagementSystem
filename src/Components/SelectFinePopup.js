@@ -82,7 +82,6 @@ export default function SelectFinePopup(props) {
                 })
                 .catch();
 
-            console.log(updateMeetIdDateTime);
 
             setFine(0);
 

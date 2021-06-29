@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom'
 import './index.css';
+import reducer,{initialState} from './Components/reducer'; 
+import {StateProvider} from './Components/StateProvider';
 import App from './App';
 
 ReactDOM.render(
+  <StateProvider initialState={initialState} reducer={reducer}>
   <BrowserRouter>
     <App />
-    </BrowserRouter>,
+    </BrowserRouter>
+  </StateProvider>,
   document.getElementById('root')
 );
 

@@ -6,6 +6,8 @@ import './App.css';
 import db from './firebase.js'
 import {Route,Switch} from 'react-router-dom'
 import SideDrawer from './Components/SideDrawer'
+import SignIn from './Components/SignIn'
+import PrivateRoute from './Components/PrivateRoute';
 
 
 export const totalM = React.createContext();
@@ -38,7 +40,6 @@ function App() {
      <meetingContext.Provider value={meetings}>
       <Route exact path="/">
         <Main />
-        
       </Route>
 
     <Route path="/main">
@@ -53,9 +54,16 @@ function App() {
 
 <totalM.Provider value={{totalEarned:totalEarned,updateTotalM:setTotalEarned}}>
 
-      <Route path="/forAdminOnly">
-        <SideDrawer />
+      <Route path="/admin">
+        <SignIn />
       </Route>
+
+      <PrivateRoute path="/forAdminOnly" component={SideDrawer} />
+
+    {/* <Route path="/forAdminOnly">
+        <SideDrawer />
+    </Route> */}
+
 
             
             

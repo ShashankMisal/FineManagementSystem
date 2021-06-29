@@ -14,12 +14,17 @@ import MenuIcon from '@material-ui/icons/Menu';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import clsx from 'clsx';
 import React from 'react';
-import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Link,Switch, useRouteMatch ,useHistory} from 'react-router-dom';
 import AddNewMeeting from './AddNewMeeting';
 import AddNewUser from './AddNewUser';
 import CalculateTotalFine from './CalculateTotalFine';
 import Fine from './Fine';
 import Footer from './Footer';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { auth } from '../firebase.js'
+import { useStateValue } from './StateProvider';
+import PrivateRoute from './PrivateRoute';
+import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 
@@ -75,6 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SideDrawer() {
   const classes = useStyles();
+  let history = useHistory()
+  const [dispatch] = useStateValue();
 
   const [open, setOpen] = React.useState(false);
 
@@ -89,7 +96,15 @@ export default function SideDrawer() {
   };
   
 
-
+  const handleLogout= ()=> {
+    auth.signOut().then(() => {
+            dispatch({type:"Logout",value:null})
+            console.log("signout")
+            history.push("/main");
+      }).catch(()=>{
+          return console.log("cant signout")
+      })
+  }
 
   
 
@@ -137,6 +152,13 @@ export default function SideDrawer() {
         </div>
         <List>
         
+        <Link to={`/main`} style={linkStyle}>
+            <ListItem style={listItemStyle} button>
+              <ListItemIcon><HomeIcon  /> </ListItemIcon>
+              <ListItemText primary="HOME"/>
+            </ListItem>
+        </Link>
+
         <Link to={`${url}/addMeeting`} style={linkStyle}>
             <ListItem style={listItemStyle} button>
               <ListItemIcon><AddToPhotosIcon  /> </ListItemIcon>
@@ -164,6 +186,13 @@ export default function SideDrawer() {
                 <ListItemText primary="Calculate Total Fine"/>
               </ListItem>
           </Link>
+
+          
+          <ListItem style={listItemStyle} button onClick={handleLogout} >
+                <ListItemIcon><ExitToAppIcon/> </ListItemIcon>
+                <ListItemText primary="LOGOUT"/>
+          </ListItem>
+        
         
         </List>
         {/* <List>
@@ -194,22 +223,15 @@ export default function SideDrawer() {
         </Route>
       */}
 
-        <Route path={`${path}/addMeeting`}>
-          <AddNewMeeting/>
-        </Route>
+      <PrivateRoute path={`${path}/addMeeting`} component={AddNewMeeting} />
+      <PrivateRoute path={`${path}/addNewUser`} component={AddNewUser} />
+      <PrivateRoute path={`${path}/addaddfine9xvds5`} component={Fine} />
+      <PrivateRoute path={`${path}/totalFineCollected`} component={CalculateTotalFine} />
+
+
         
-         <Route path={`${path}/addNewUser`}>
-          <AddNewUser/>
-        </Route>
         
         
-      <Route path={`${path}/addaddfine9xvds5`}>
-                <Fine />
-            </Route>
-            
-            <Route path={`${path}/totalFineCollected`}>
-              <CalculateTotalFine/>
-            </Route>
             </Switch>
         {/* <Route path={`${path}/addNewUser`}>
           

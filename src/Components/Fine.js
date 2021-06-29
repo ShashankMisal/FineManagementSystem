@@ -59,6 +59,9 @@ function Fine() {
             setGetDataFromDB(false)
         }
 
+        return () => {
+    }
+
     }, [getDataFromDB, id])
 
 

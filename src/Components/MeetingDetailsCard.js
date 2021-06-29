@@ -85,11 +85,7 @@ export default function MeetingsCard() {
               {title}
             </Typography>
           </Grid>
-          <Grid item >
-            <Typography gutterBottom>
-              $4.50
-            </Typography>
-          </Grid>
+          
         </Grid>
         <Typography color="textSecondary" variant="body2">
          {description}
