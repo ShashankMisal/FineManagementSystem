@@ -100,7 +100,7 @@ export default function SideDrawer() {
     auth.signOut().then(() => {
             dispatch({type:"Logout",value:null})
             console.log("signout")
-            history.push("/main");
+            history.push("/");
       }).catch(()=>{
           return console.log("cant signout")
       })

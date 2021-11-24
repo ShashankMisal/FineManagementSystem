@@ -11,6 +11,9 @@ import MeetingsCard from "./MeetingsCard";
 // import DoughnutChart from "./DoughnutChart";
 import BarGraph from "./BarGraph";
 import Paper from "@material-ui/core/Paper";
+import { Button, IconButton } from "@material-ui/core";
+import HomeIcon from '@material-ui/icons/Home';
+
 
 export const meetContext = React.createContext("");
 
@@ -44,9 +47,9 @@ function UserList() {
                 }))
             )
         );
-        
+
         return () => {
-          }
+        }
 
     }, []);
 
@@ -62,6 +65,7 @@ function UserList() {
         <div className="userList">
             <SearchBar />
 
+            
             <div className="chooseBtn">
                 <ChooseBtn setChooseIndex={setChooseIndex} />
             </div>
@@ -98,7 +102,7 @@ function UserList() {
                             elevation={2}
                             style={{
                                 backgroundImage:
-                                   "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
+                                    "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)",
                                 width: "80%",
                                 height: "100%",
                                 padding: "15px",

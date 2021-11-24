@@ -9,8 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
-import  LayersIcon  from '@material-ui/icons/Layers';
+import LayersIcon from '@material-ui/icons/Layers';
 import MeetingDetailsCard from './MeetingDetailsCard';
+import './MeetingDetailsPopup.css'
 
 
 const styles = (theme) => ({
@@ -55,7 +56,7 @@ const DialogActions = withStyles((theme) => ({
 
 export default function MeetDetailsPopup() {
   const [open, setOpen] = React.useState(false);
-  
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -63,36 +64,36 @@ export default function MeetDetailsPopup() {
   const handleClose = (e) => {
     e.preventDefault();
     setOpen(false);
-    
+
   };
 
- 
 
-  
+
+
 
   return (
     <div>
-      <IconButton aria-label="delete" onClick={handleClickOpen}>
-        <LayersIcon/>
+      <IconButton aria-label="delete" onClick={handleClickOpen} className="blink2">
+        <LayersIcon />
       </IconButton>
       <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-        <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{backgroundColor:"rgb(7 0 32)",color:"#f2f0fb"}}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose} style={{ backgroundColor: "rgb(7 0 32)", color: "#f2f0fb" }}>
           Meeting Details.
         </DialogTitle>
         <Slide in direction="down">
 
 
-        <DialogContent dividers>
-            <MeetingDetailsCard/>
-        </DialogContent>
-      </Slide>
+          <DialogContent dividers>
+            <MeetingDetailsCard />
+          </DialogContent>
+        </Slide>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-           Cansel
+            Cancel
           </Button>
         </DialogActions>
       </Dialog>
-    
+
     </div>
   );
 }

@@ -9,6 +9,10 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import { Link } from 'react-router-dom';
+import { IconButton } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+
 
 const options = ['Users', 'Meetings'];
 
@@ -42,6 +46,12 @@ export default function ChooseBtn(props) {
   return (
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
+        <Link to="/">
+          <IconButton>
+            <HomeIcon style={{ fontSize: "2.5rem" }} />
+          </IconButton>
+        </Link>
+
         <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
           <Button onClick={handleClick}>{options[selectedIndex]}</Button>
           <Button

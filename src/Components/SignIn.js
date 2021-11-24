@@ -3,7 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import Link1 from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -12,14 +12,17 @@ import Container from '@material-ui/core/Container';
 import { auth } from '../firebase.js'
 import { useHistory } from "react-router-dom";
 import { useStateValue } from './StateProvider';
+import { IconButton } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import { Link } from 'react-router-dom'
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
+      {'© '}
+      <Link1 color="inherit" href="https://github.com/ShashankMisal">
+        Connet with Developer
+      </Link1>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -79,7 +82,6 @@ export default function SignIn() {
     }).catch(err => {
         console.log(err)
         alert("Wrong Email-Password")
-        history.push("/main");
     })
 }
 
@@ -87,11 +89,8 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log In
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -129,10 +128,18 @@ export default function SignIn() {
           >
             Sign In
           </Button>
+
           
         </form>
+
+          <Link to="/">
+            <IconButton>
+                  <HomeIcon style={{fontSize:"2.5rem"}}/>
+            </IconButton>
+          </Link>
+
       </div>
-      <Box mt={8}>
+      <Box mt={1}>
         <Copyright />
       </Box>
     </Container>
