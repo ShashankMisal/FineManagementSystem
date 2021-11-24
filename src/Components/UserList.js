@@ -11,8 +11,6 @@ import MeetingsCard from "./MeetingsCard";
 // import DoughnutChart from "./DoughnutChart";
 import BarGraph from "./BarGraph";
 import Paper from "@material-ui/core/Paper";
-import { Button, IconButton } from "@material-ui/core";
-import HomeIcon from '@material-ui/icons/Home';
 
 
 export const meetContext = React.createContext("");
