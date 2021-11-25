@@ -1,12 +1,12 @@
 
 # [Fine-Management-System](https://fine-management-systems.herokuapp.com/)
 
-A portal to track fines of users in a very trasparent manner.
+A portal to track fines of users in a very transparent manner.
 
 
 
 ## Tech Stack
- **ReactJs**, **MaterialUI**, **Firebase**,**Char-Js**
+ **ReactJs**, **MaterialUI**, **Firebase**,**Chart-Js**
  ,**Firebase-Authentication**,
 
 
