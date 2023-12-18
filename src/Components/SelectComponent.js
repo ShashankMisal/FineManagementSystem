@@ -25,7 +25,8 @@ const SelectComponent = (props) => {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    if (props.setShowFineButton) props?.setShowFineButton(false);
+    if (props.setShowFineButton) 
+     return props?.setShowFineButton(false);
   };
 
   const minimalSelectClasses = useMinimalSelectStyles();
