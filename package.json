@@ -2,8 +2,8 @@
   "name": "fms",
   "version": "0.1.0",
   "engines": {
-    "node": "18.14.0",
-    "npm": "9.3.1"
+    "node": "16.x",
+    "npm": "8.x"
   },
   "private": true,
   "dependencies": {
